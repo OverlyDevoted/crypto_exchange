@@ -1,4 +1,5 @@
 @import "./variables/Variables.scss";
+
 .results {
     background-color: white;
     color: black;
@@ -16,20 +17,33 @@
     list-style-position: unset;
     list-style-type: none;
     margin-top: 0px;
-    
+
 }
-.results li{
+
+.results li {
     &:hover {
         background-color: blue;
     }
 }
+
 #search-bar {
     width: $search-bar-width;
     margin: 0px;
     padding: 0px;
 }
 
-.search-container {
-    display: flex;
-    flex-direction: row;
+@keyframes ping-anim {
+    from {
+        color: white;
+    }
+
+    to {
+        color: red;
+    }
+}
+
+.error-message {
+    color:red;
+    animation: ping-anim 500ms ease-out;
+    animation-iteration-count: 1; 
 }

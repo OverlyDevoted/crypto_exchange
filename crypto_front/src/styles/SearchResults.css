@@ -4,7 +4,7 @@
   max-height: 10vh;
   overflow-x: hidden;
   overflow-y: auto;
-  width: 10%;
+  width: 50%;
   border-radius: 2px;
   border-color: black;
   border: solid;
@@ -22,12 +22,21 @@
 }
 
 #search-bar {
-  width: 10%;
+  width: 50%;
   margin: 0px;
   padding: 0px;
 }
 
-.search-container {
-  display: flex;
-  flex-direction: row;
+@keyframes ping-anim {
+  from {
+    color: white;
+  }
+  to {
+    color: red;
+  }
+}
+.error-message {
+  color: red;
+  animation: ping-anim 500ms ease-out;
+  animation-iteration-count: 1;
 }/*# sourceMappingURL=SearchResults.css.map */
