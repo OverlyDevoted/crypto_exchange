@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import "../styles/SearchResults.css"
+import "./../../styles/components/SearchResults.css"
 import { SearchItem } from './SearchItem'
 export const SearchResults = (props) => {
 
@@ -16,9 +16,14 @@ export const SearchResults = (props) => {
     return (
       <div className='results'>
         <ul>
-          {filtered ? filtered.map((currency, index) => {
-            return (<SearchItem key={index} currency={currency.code} setQuery={props.setQuery} />)
-          }) : <></>}
+          {
+            filtered ?
+              filtered.map(
+                (currency, index) => {
+                  return (<SearchItem key={index} currency={currency.code} setQuery={props.setQuery} />)
+                }
+              ) : <></>
+          }
         </ul>
       </div>
     )

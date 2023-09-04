@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from 'react'
-import './../styles/SearchResults.css'
+import './../../styles/components/SearchResults.css'
 import { SearchResults } from './SearchResults'
+/* import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css' */
 import ErrorBar from './ErrorBar'
 
 export const SearchBar = (props) => {
@@ -9,6 +11,7 @@ export const SearchBar = (props) => {
 
     function handleSearchSubmit(searchValue) {
         setMessage("");
+        props.setSymbol("");
         if (searchValue.length >= 30) {
             return new Promise(function (resolve) {
                 setTimeout(resolve, 0);
@@ -17,6 +20,7 @@ export const SearchBar = (props) => {
             })
         }
         else if (props.array.find((element) => element.code == searchValue.toUpperCase())) {
+            props.setSymbol(searchQuery);
             alert(`${searchQuery.toUpperCase()} is in the dataset`)
             return;
         }
@@ -31,8 +35,8 @@ export const SearchBar = (props) => {
     }
     return (
         <>
+            <ErrorBar message={message} />
             <div className='search-container'>
-                <ErrorBar message={message} />
                 <input
                     type="text"
                     name="search"
@@ -41,11 +45,12 @@ export const SearchBar = (props) => {
                     value={searchQuery}
                     onChange={e => {
                         setQuery(e.target.value);
-                    }} />
+                    }} >
+
+                </input>
                 <button type='submit' onClick={() => { handleSearchSubmit(searchQuery) }}>Search</button>
             </div>
-
-            <SearchResults currencies={props.array} setQuery={setQuery} searchQuery={searchQuery} />
+            {props.array ? <SearchResults currencies={props.array} setQuery={setQuery} searchQuery={searchQuery} /> : <></>}
         </>
     )
 }
