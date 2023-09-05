@@ -2,7 +2,8 @@ const { MongoClient } = require("mongodb");
 module.exports = class DbHandler {
     constructor(uri) {
         this.uri = uri;
-        this.client = new MongoClient(this.uri);
+        if (uri)
+            this.client = new MongoClient(this.uri);
     }
     async connect(operation) {
         try {

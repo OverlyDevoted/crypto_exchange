@@ -2,10 +2,9 @@
 //enabling environment variables 
 const dotenv = require('dotenv');
 dotenv.config();
-
+//more sophisticated URI check need for checking db integration
 if (!process.env.MONGODB_URI) {
-    console.error("Could not find MongoDB deployment URI. Closing server...")
-    return;
+    console.error("Could not find MongoDB deployment URI. Closing server...");
 }
 const dbHandler = require("./db.js");
 const db = new dbHandler(process.env.MONGODB_URI);
@@ -20,16 +19,22 @@ app.post('/api', async (req, res) =>  {
     const user = req.query.user;
     const action = req.query.action;
     //remove when proxy is setup
+    console.log(`User ${user} ${action}ed for: ${cryptocurrency}`);
     res.header('Access-Control-Allow-Origin','*');
     if (!cryptocurrency || !user || !action) {
         console.log("No parameter \'value\', \'user\' or \'action\' was provided");
-        res.json({ message: `No parameter \'value\', \'user\' or \'action\'was provided`, response: 502 });
+        res.status(502);
+        res.json({ message: `No parameter \'value\', \'user\' or \'action\'was provided` });
         return;
     }
-    console.log(`User ${user} ${action}ed for: ${cryptocurrency}`);
+    if(!db.uri)
+    {
+        res.json({ message: `Only logged without saving to database`});
+        return;
+    }    
     await db.insertSearch("cryptoExchange", action, {cryptocurrency: cryptocurrency, user: user});
     console.log("Finished handling request in the DB. Sending response");
-    res.json({ message: `User ${user} successfully inserted ${action} value: ${cryptocurrency}`, response: 200 });
+    res.json({ message: `User ${user} successfully inserted ${action} value: ${cryptocurrency}`});
 })
 
 
