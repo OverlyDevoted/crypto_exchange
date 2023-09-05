@@ -19,7 +19,7 @@ module.exports = class DbHandler {
     async insertSingle(dbName, collectionName, data) {
         let database;
         let collection;
-        this.connect(async () => {
+        await this.connect(async () => {
             database = this.client.db(dbName);
             collection = database.collection(collectionName);
             try {
@@ -52,7 +52,7 @@ module.exports = class DbHandler {
     async update(dbName, collectionName, value) {
         let database;
         let collection;
-        this.connect(async () => {
+        await this.connect(async () => {
             database = this.client.db(dbName);
             collection = database.collection(collectionName);
             try {

@@ -1,0 +1,28 @@
+@import "./../variables/Variables.scss";
+.graph-container{
+    width: 100%;
+    height: 100%;
+}
+.range-container{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    background-color: $secondary-color;
+}
+.range-selector{
+    width: 100%;
+    border-radius: 0px;
+}
+.loading {
+    animation: spin 2s infinite linear;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

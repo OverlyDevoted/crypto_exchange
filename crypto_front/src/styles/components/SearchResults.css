@@ -1,13 +1,15 @@
 .results {
+  position: absolute;
   background-color: white;
   color: black;
-  max-height: 10vh;
+  max-height: 15vh;
   overflow-x: hidden;
   overflow-y: auto;
   width: 20em;
   border-radius: 2px;
   border-color: black;
   border: solid;
+  top: 2.5em;
 }
 
 .results ul {
@@ -15,6 +17,7 @@
   list-style-position: unset;
   list-style-type: none;
   margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 .results li:hover {
@@ -27,6 +30,7 @@
   align-items: center;
   justify-content: center;
   position: relative;
+  margin-bottom: 1em;
 }
 
 #search-bar {

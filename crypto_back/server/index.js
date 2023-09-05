@@ -15,47 +15,23 @@ const express = require("express");
 const PORT = process.env.PORT || 3001;
 
 const app = express();
-app.get('/api/search', (req, res) => {
+app.post('/api', async (req, res) =>  {
     const cryptocurrency = req.query.value; 
     const user = req.query.user;
-    if (!cryptocurrency || !user) {
-        console.log("No parameter \'value\' or \'user\' was provided");
-        res.json({ message: `No parameter \'value\' or \'user\' was provided`, response: 502 });
+    const action = req.query.action;
+    //remove when proxy is setup
+    res.header('Access-Control-Allow-Origin','*');
+    if (!cryptocurrency || !user || !action) {
+        console.log("No parameter \'value\', \'user\' or \'action\' was provided");
+        res.json({ message: `No parameter \'value\', \'user\' or \'action\'was provided`, response: 502 });
         return;
     }
-    console.log(`User ${user} searched for: ${cryptocurrency}`);
-    db.insertSearch("cryptoExchange", "search", {cryptocurrency: cryptocurrency, user: user});
-
-    res.json({ message: `User ${user} successfully inserted search value: ${cryptocurrency}`, response: 200 });
+    console.log(`User ${user} ${action}ed for: ${cryptocurrency}`);
+    await db.insertSearch("cryptoExchange", action, {cryptocurrency: cryptocurrency, user: user});
+    console.log("Finished handling request in the DB. Sending response");
+    res.json({ message: `User ${user} successfully inserted ${action} value: ${cryptocurrency}`, response: 200 });
 })
 
-app.get('/api/find', (req, res) => {
-    const cryptocurrency = req.query.value;
-    const user = req.query.user;
-    if (!cryptocurrency || !user) {
-        console.log("No parameter \'value\' or \'user\' was provided");
-        res.json({ message: `No parameter \'value\' or \'user\' was provided`, response: 502 });
-        return;
-    }
-    db.find("cryptoExchange", "search", { cryptocurrency: cryptocurrency, user: user });
-    console.log("finding");
-    res.json({ message: "finding" });
-})
-/* 
-app.get('/api/select', (req, res) => {
-    const search = req.query.value;
-    const user = req.query.user;
-    if (!search || !user)
-    {
-        console.log("No parameter \'search\' was provided");
-        res.json({ message: `Server could not resolve the request`, response: 502 });
-        return;
-    }
-    
-    console.log("User searched for: " + search);
-    db.insertSingle("cryptoExchange", user, { selection: search, date: Date() });
-    res.json({ message: `Successfully inserted search value: ${search}`, response: 200 });
-}) */
 
 app.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);
