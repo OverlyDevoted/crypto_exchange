@@ -1,7 +1,7 @@
 # Repository and documentation for Crypto Exchange system 
 
 ## About this
-Hello! The purpose of this file is to provide a project overview, setup instructions and list out . 
+Hello! The purpose of this file is to provide a project overview, setup instructions and list out some details about the project. 
 
 This is a task project for JavaScript Application Developer internship at IBM. During the time of doing this homework assignment a software system was created for looking up cryptocurrency prices. Main features include:
  - Cryptocurrency symbol search;
