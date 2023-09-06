@@ -5,6 +5,9 @@ module.exports = class DbHandler {
         if (uri)
             this.client = new MongoClient(this.uri);
     }
+    isConnected() {
+        return !!this.client && !!this.client.topology && this.client.topology.isConnected()
+    }
     async connect(operation) {
         try {
             await this.client.connect();
