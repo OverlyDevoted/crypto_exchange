@@ -47,7 +47,7 @@ Not all features were fully implemented. Most notable features that need additio
    so data points that date behind the time range have to be excluded
    from the data array
  
- - Front-end vite build errors. Some Node.js modules imported from the
+ - Front-end vite build errors [*Fixed post deadline*]. Some Node.js modules imported from the
    CCXT library don't get built for the front-end application. Bandage
    solution would be to move the CCXT library to the existing back-end
    or build another back-end solely for handling cryptocurrency data.
@@ -57,6 +57,7 @@ Not all features were fully implemented. Most notable features that need additio
    
  - Proper database connection handling. Currently database object created for
    handling database logic inside the back-end server is validated against the URI provided in the `.env` file. Currently, even with an invalid database URI, the server system will attempt to call the database functions, potentially leading to a server crash. To address this issue, error callback functions should be implemented within the database functions. These callback functions would allow to add functions that would handle cases when the database is not instantiated or cannot be reached at the moment of calling the database."
+   
  - Candlestick graph height does not get properly resized when resizing
    the window. Full  component re-rendering should be done when changing
    window height.
