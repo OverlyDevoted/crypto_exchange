@@ -25,7 +25,7 @@ app.post('/api', async (req, res) => {
     if (!cryptocurrency || !user || !action) {
         console.log("No parameter \'value\', \'user\' or \'action\' was provided");
         res.status(502);
-        res.json({ message: `No parameter \'value\', \'user\' or \'action\'was provided` });
+        res.json({ message: `No parameter \'value\', \'user\' or \'action\' was provided` });
         return;
     }
     if (!db.uri) {
@@ -37,7 +37,7 @@ app.post('/api', async (req, res) => {
     res.json({ message: `User ${user} successfully inserted ${action} value: ${cryptocurrency}` });
 })
 
-app.use(express.static(path.join(__dirname, '..', '..', 'crypto_front', 'dist')));
+// app.use(express.static(path.join(__dirname, '..', '..', 'crypto_front', 'dist')));
 
 app.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);

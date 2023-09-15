@@ -2,8 +2,8 @@ const { MongoClient } = require("mongodb");
 module.exports = class DbHandler {
     constructor(uri) {
         this.uri = uri;
-        if (uri)
-            this.client = new MongoClient(this.uri);
+
+        this.client = new MongoClient(this.uri);
     }
     isConnected() {
         return !!this.client && !!this.client.topology && this.client.topology.isConnected()

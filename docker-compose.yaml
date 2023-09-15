@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  back:
+    build: ./crypto_back
+    container_name: back_c
+    ports:
+      - '3000:3000'
+  front:
+    build: ./crypto_front
+    container_name: front_c
+    ports:
+      - '4000:4000'
+      
