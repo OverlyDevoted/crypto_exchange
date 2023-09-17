@@ -6,7 +6,11 @@ export const SearchResults = (props) => {
   const [filtered, setFiltered] = useState(props.currencies);
   useEffect(() => {
     if (props.searchQuery) {
-      setFiltered(props.currencies.filter(function (value) { return value.code.toLowerCase().includes(props.searchQuery) }));
+      const filteredTemp = props.currencies.filter(function (value) { return value.code.toLowerCase().includes(props.searchQuery) });
+      const string_arr = filteredTemp.map((value) => { return value.code })
+      string_arr.sort();
+      console.log(string_arr);
+      setFiltered(string_arr);
     }
   }, [props.searchQuery])
 
@@ -20,7 +24,7 @@ export const SearchResults = (props) => {
             filtered ?
               filtered.map(
                 (currency, index) => {
-                  return (<SearchItem key={index} currency={currency.code} setQuery={props.setQuery} />)
+                  return (<SearchItem key={index} currency={currency} setQuery={props.setQuery} />)
                 }
               ) : <></>
           }

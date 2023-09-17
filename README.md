@@ -45,9 +45,14 @@ Not all features were fully implemented. Most notable features that need additio
    provides price data in intervals instead of time-frames. To fix the
    feature the received data has to be sorted by the actual time range,
    so data points that date behind the time range have to be excluded
-   from the data array
+   from the data array. [*Post-deadline*] On the Binance website the candlestick
+   graph shows the prices in intervals which can be chosen by the user. So
+   it is would be possible to get all the intervals and let the user pick and choose,
+   or let the user choose from predetermined time-frames. Both ways can be seen implemented
+   on various exchange platforms. (*Both interval and time-frame variations were 
+   experimented with and implemented*) 
  
- - Front-end vite build errors [*Fixed post deadline*]. Some Node.js modules imported from the
+ - Front-end vite build errors [*Fixed post-deadline*]. Some Node.js modules imported from the
    CCXT library don't get built for the front-end application. Bandage
    solution would be to move the CCXT library to the existing back-end
    or build another back-end solely for handling cryptocurrency data.
@@ -61,3 +66,7 @@ Not all features were fully implemented. Most notable features that need additio
  - Candlestick graph height does not get properly resized when resizing
    the window. Full  component re-rendering should be done when changing
    window height.
+
+ - [*Found post-deadline*] Seach data array is not sorted in any way. It should be at least sorted in alphabetical order.  
+
+ - Should've created post-deadline branch for post-deadline changes. Some commits were created on **main** branch post-deadline, then created post-deadline branch, made some changes and found that reverting commits to avoid having post-deadline commits in the main would be too tedious.

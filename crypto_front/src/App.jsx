@@ -13,26 +13,29 @@ async function getCurrencies(curFunction) {
   const currencies = await Object.values(exchange.markets).map(currency => ({
     code: currency.symbol,
   }));
-
+  currencies.sort();
   curFunction(currencies);
   console.log(currencies);
 }
 async function getOHLCV(symbol, range) {
   //range string validation
   const exchange = new ccxt.binance({});
-  if (exchange.has.fetchOHLCV) {
-    // console.log(exchange.timeframes);
+  /* console.log(range);
+  console.log(exchange.timeframes);
     
-    const rawData = await exchange.fetchOHLCV(symbol, range, undefined, 150);
+  return; */
+  if (exchange.has.fetchOHLCV) {
+    
+    const rawData = await exchange.fetchOHLCV(symbol, range.interval, undefined, range.limit);
     let tempData;
 
     let processedData = rawData.map((arr, index) => {
       const date = new Date(arr[0]).toDateString();
-      if (tempData) {
+      /* if (tempData) {
         if (tempData == date) {
           return;
         }
-      }
+      } */
       tempData = date;
       let resArr = []
       resArr.push(new Date(arr[0]).toLocaleString())
