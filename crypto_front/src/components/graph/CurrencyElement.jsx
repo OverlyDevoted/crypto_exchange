@@ -38,8 +38,9 @@ export const CurrencyElement = (props) => {
     useEffect(() => {
     }, [props.data])
     
-    if (!props.data)
+    if (!props.data || props.loading)
         return (<div>{props.loading ? <AiOutlineLoading size={300} className='loading' /> : <></>}</div>)
+    
     return (
         <div key={props.key} className='graph-container'>
             {props.data ?

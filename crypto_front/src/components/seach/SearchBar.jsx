@@ -1,15 +1,24 @@
-import { useState } from 'react'
-import './../../styles/components/SearchResults.css'
-import { SearchResults } from './SearchResults'
+import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
+import { useSearchParams } from "react-router-dom";
+
+import { SearchResults } from './SearchResults'
 import ErrorBar from './ErrorBar'
+import './../../styles/components/SearchResults.css'
 
 
 export const SearchBar = (props) => {
-    const [searchQuery, setQuery] = useState("");
     const [message, setMessage] = useState("");
     const [cookie, setCookies] = useCookies("uuid");
+
+    let [searchParams, setSearchParams] = useSearchParams();
+    const search = searchParams.get("search");
+
+    const abort = new AbortController();
     async function handleSearchSubmit(searchValue) {
+        abort.abort();
+        const signal = abort.signal;
+
         setMessage("");
         props.setSymbol("");
         if (searchValue.length >= 30) {
@@ -20,15 +29,18 @@ export const SearchBar = (props) => {
             })
         }
         else if (props.array.find((element) => element.code == searchValue.toUpperCase())) {
-            const query = searchQuery.replace('/', '%F2')
-            props.setSymbol(searchQuery);
-            try {
-                console.log("Sending user action");
-                await fetch(`http://localhost:3000/api?value=${query}&user=${encodeURIComponent(cookie.uuid)}&action=search`, { method: 'POST' });
-            }
-            catch (e) {
-                console.log(e);
-            }
+            const query = search.replace('/', '%F2')
+            props.setSymbol(search);
+
+            console.log("Sending user action");
+            await fetch(`http://localhost:3000/api?value=${query}&user=${encodeURIComponent(cookie.uuid)}&action=search`, { signal: signal, method: 'POST' })
+                .catch(err => {
+                    if (err.name === "AbortError") {
+                        console.log("canceled")
+                    } else {
+                        //handle errors 
+                    }
+                });
             return;
         }
         else {
@@ -40,6 +52,14 @@ export const SearchBar = (props) => {
         }
 
     }
+
+    useEffect(() => {
+        if (!props.array)
+            return;
+        setSearchParams({ search: search })
+        handleSearchSubmit(search)
+    }, [props.array])
+
     return (
         <>
             <ErrorBar message={message} />
@@ -49,12 +69,12 @@ export const SearchBar = (props) => {
                     name="search"
                     id="search-bar"
                     autoComplete='false'
-                    value={searchQuery}
+                    value={search}
                     onChange={e => {
-                        setQuery(e.target.value);
+                        setSearchParams({ search: e.target.value });
                     }} />
-                <button type='submit' onClick={() => { handleSearchSubmit(searchQuery) }}>Search</button>
-                {props.array ? <SearchResults currencies={props.array} setQuery={setQuery} searchQuery={searchQuery} /> : <></>}
+                <button type='submit' onClick={() => { handleSearchSubmit(search) }}>Search</button>
+                <SearchResults currencies={props.array} searchQuery={search} />
             </div>
         </>
     )

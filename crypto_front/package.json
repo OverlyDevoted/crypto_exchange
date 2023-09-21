@@ -13,13 +13,17 @@
   "dependencies": {
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
+    "localforage": "^1.10.0",
+    "match-sorter": "^6.3.1",
     "react": "^18.2.0",
     "react-cookie": "^6.1.0",
     "react-dom": "^18.2.0",
     "react-google-charts": "^4.0.1",
     "react-icons": "^4.10.1",
+    "react-router-dom": "^6.16.0",
     "sass": "^1.66.1",
-    "socks-proxy-agent": "^8.0.1"
+    "socks-proxy-agent": "^8.0.1",
+    "sort-by": "^1.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",

@@ -70,3 +70,5 @@ Not all features were fully implemented. Most notable features that need additio
  - [*Found post-deadline*] Seach data array is not sorted in any way. It should be at least sorted in alphabetical order.  
 
  - Should've created post-deadline branch for post-deadline changes. Some commits were created on **main** branch post-deadline, then created post-deadline branch, made some changes and found that reverting commits to avoid having post-deadline commits in the main would be too tedious.
+
+ - [Added] It is better to put the search query text into URL as a parameter for better UX instead of using useState for it. 

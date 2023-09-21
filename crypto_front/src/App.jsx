@@ -1,10 +1,15 @@
-import { useState, useEffect } from 'react'
-import { SearchBar } from './components/seach/SearchBar'
 import './styles/App.css'
+
 import ccxt from 'ccxt'
+
+import { useState, useEffect } from 'react'
+import { useCookies } from 'react-cookie';
+
+import { SearchBar } from './components/seach/SearchBar'
 import { RangePick } from './components/graph/RangePick';
 import { CurrencyElement } from './components/graph/CurrencyElement';
-import { useCookies } from 'react-cookie';
+
+
 
 async function getCurrencies(curFunction) {
   const exchange = new ccxt.binance({});
@@ -20,23 +25,12 @@ async function getCurrencies(curFunction) {
 async function getOHLCV(symbol, range) {
   //range string validation
   const exchange = new ccxt.binance({});
-  /* console.log(range);
-  console.log(exchange.timeframes);
-    
-  return; */
+
   if (exchange.has.fetchOHLCV) {
     
     const rawData = await exchange.fetchOHLCV(symbol, range.interval, undefined, range.limit);
-    let tempData;
 
     let processedData = rawData.map((arr, index) => {
-      const date = new Date(arr[0]).toDateString();
-      /* if (tempData) {
-        if (tempData == date) {
-          return;
-        }
-      } */
-      tempData = date;
       let resArr = []
       resArr.push(new Date(arr[0]).toLocaleString())
       resArr.push(arr[3]);
@@ -57,11 +51,12 @@ async function getOHLCV(symbol, range) {
 
 function App() {
   //remake into symbols
-  const [currencies, setCurrencies] = useState();
-  const [symbolData, setSymbolData] = useState();
-  const [symbol, setSymbol] = useState();
-  const [isLoading, setLoading] = useState(false);
-  const [cookies, setCookie] = useCookies(['uuid']);
+  const [currencies, setCurrencies] = useState();     // All symbols fetched on first render
+  const [symbolData, setSymbolData] = useState();     // Price data for searched and time range selected symbol 
+  const [symbol, setSymbol] = useState();             // Searched symbol
+  const [isLoading, setLoading] = useState(false);    
+  const [cookies, setCookie] = useCookies(['uuid']);  
+  
   function setNewSymbol(value) {
     setSymbolData();
     setSymbol(value);

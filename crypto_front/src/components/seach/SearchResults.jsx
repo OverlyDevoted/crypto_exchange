@@ -3,20 +3,21 @@ import "./../../styles/components/SearchResults.css"
 import { SearchItem } from './SearchItem'
 export const SearchResults = (props) => {
 
-  const [filtered, setFiltered] = useState(props.currencies);
+  const [filtered, setFiltered] = useState(props.currencies? props.currencies:[] );
+  const max_entries = 20;
   useEffect(() => {
-    if (props.searchQuery) {
+    if (props.searchQuery && props.currencies) {
       const filteredTemp = props.currencies.filter(function (value) { return value.code.toLowerCase().includes(props.searchQuery) });
-      const string_arr = filteredTemp.map((value) => { return value.code })
+      const string_arr = filteredTemp.map((value, index) => { return value.code })
       string_arr.sort();
       console.log(string_arr);
       setFiltered(string_arr);
     }
   }, [props.searchQuery])
-
-  if (filtered && props.searchQuery) {
-    if (filtered.length < 1)
-      return <></>
+  if(!filtered)
+  return <></>
+  if(filtered.length > 1)
+  {
     return (
       <div className='results'>
         <ul>
@@ -24,15 +25,12 @@ export const SearchResults = (props) => {
             filtered ?
               filtered.map(
                 (currency, index) => {
-                  return (<SearchItem key={index} currency={currency} setQuery={props.setQuery} />)
+                  return (<SearchItem key={index} currency={currency} />)
                 }
               ) : <></>
           }
         </ul>
       </div>
     )
-  }
-  else {
-    return <></>
   }
 }
